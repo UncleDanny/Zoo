@@ -1,12 +1,14 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.SignalR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Zoo.Animals;
 
 namespace Zoo.Services
 {
-    public class AnimalService
+    public class AnimalService : IAnimalService
     {
         public List<Animal> animals;
         public List<string> animalNames;
@@ -39,5 +41,7 @@ namespace Zoo.Services
 
             return names;
         }
+
+        
     }
 }

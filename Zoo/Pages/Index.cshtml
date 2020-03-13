@@ -8,134 +8,19 @@
     <form asp-page-handler="add" method="post">
         Add animal: <select asp-for="SelectedAddAnimal" asp-items="@Model.ListOfAnimals"></select>
         <input type="text" name="name" style="width: 130px" />
-        <button id="Add" type="button" onclick="add()" class="btn btn-primary" style="width: 130px">Add</button>
+        <button id="Add" type="button" onclick="AddAnimal()" class="btn btn-primary" style="width: 130px">Add</button>
     </form>
     <form asp-page-handler="feed" method="post">
         Feed animal: <select asp-for="SelectedFeedAnimal" asp-items="@Model.ListOfAnimals"></select>
-        <button id="Feed" type="button" onclick="feed()" class="btn btn-primary" style="width: 130px" name="type" value="all">Feed</button>
+        <button id="Feed" type="button" onclick="FeedAnimal()" class="btn btn-primary" style="width: 130px" name="type" value="all">Feed</button>
+    </form>
+    <form asp-page-handler="send" method="post">
+        <button id="Send" type="button" onclick="send()" class="btn btn-primary" style="width: 130px" name="type" value="all">Send</button>
     </form>
 </div>
 <div id="reload">
 
 </div>
 
-
-@section scripts {
-    <script>
-        function foo() {
-            $('#reload').load('/Index?handler=AnimalPartial')
-        }
-
-        window.onload = function () {
-            setInterval(foo, 500);
-        }
-
-        //$.ajax({
-
-        //    url: '/?handler=Feed',
-        //    //data: JSON.stringify(postData), //your data
-        //    type: 'POST',
-        //    contentType: 'application/json',
-        //    dataType: 'json',
-
-        //    success: function (result) {
-        //        alert(result);  //do something if successful
-        //    },
-        //    complete: function () {
-        //        //do something on complete
-        //    },
-        //    failure: function (err) {
-        //        alert(err); // Display error message
-        //    }
-        //});
-
-        function add() {
-            var type = $('#SelectedAddAnimal').val();
-            var name = $('input').val();
-            var animal = {"Name":name,"Type":type};
-            $.ajax({
-                url: '/?handler=Add',
-                type: 'POST',
-                contentType: 'application/json; charset=utf-8',
-                dataType: 'json',
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader("RequestVerificationToken",
-                        $('input:hidden[name="__RequestVerificationToken"]').val());
-                },
-                data: JSON.stringify(animal),
-                success: function (result) {
-                    alert(result)
-                },
-                complete: function () {
-                    //do something on complete
-                },
-                failure: function (err) {
-                    alert(err); // Display error message
-                }
-            });
-        }
-
-        function feed() {
-            var animal = $('#SelectedFeedAnimal').val();
-            $.ajax({
-                url: '/?handler=Feed',
-                type: 'POST',
-                contentType: 'application/json; charset=utf-8',
-                dataType: 'json',
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader("RequestVerificationToken",
-                        $('input:hidden[name="__RequestVerificationToken"]').val());
-                },
-                data: JSON.stringify(animal),
-                success: function (result) {
-                    alert(result)
-                },
-                complete: function () {
-                    //do something on complete
-                },
-                failure: function (err) {
-                    alert(err); // Display error message
-                }
-            });
-        }
-                        //var issue = JSON.stringify(this.swalForm);
-                        //$.ajax({
-                        //    type: "POST",
-                        //    url: "../api/Issues",
-                        //    contentType: "application/json; charset=utf-8",
-                        //    beforeSend: function (xhr) {
-                        //        xhr.setRequestHeader("RequestVerificationToken",
-                        //            $('input:hidden[name="__RequestVerificationToken"]').val());
-                        //    },
-                        //    dataType: "json",
-                        //    data: issue,
-                        //    error: function (xhr) {
-                        //        alert('Error: ' + xhr.statusText);
-                        //    },
-                        //    success: function (msg) {
-                        //        console.log(msg.result);
-                        //    }
-                        //});
-
-                        //$.ajax({
-                        //    type: "POST",
-                        //    url: "/Index?handler=Feed",
-                        //    contentType: "application/json; charset=utf-8",
-                        //    dataType: "json",
-                        //    success: function (response) {
-                        //        var dvItems = $("#dvPostItems");
-                        //        dvItems.empty();
-                        //        $.each(response, function (i, item) {
-                        //            var $tr = $('<li>').append(item).appendTo(dvItems);
-                        //        });
-                        //    },
-                        //    failure: function (response) {
-                        //        alert(response);
-                        //    }
-                        //});
-
-
-
-
-    </script>
-}
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/Index.js"></script>

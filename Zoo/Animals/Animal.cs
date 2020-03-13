@@ -22,4 +22,10 @@ namespace Zoo.Animals
 
         public abstract void UseEnergy();
     }
+
+    public class AnimalDto
+    {
+        public string Name { get; set; }
+        public string Type { get; set; }
+    }
 }

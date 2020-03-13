@@ -19,7 +19,7 @@ namespace Zoo.Pages
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
-        private readonly AnimalService _animalService;
+        private readonly IAnimalService _animalService;
         private Timer timer;
 
         public List<Animal> Animals { get; set; }
@@ -32,7 +32,7 @@ namespace Zoo.Pages
         [BindProperty(SupportsGet = true)]
         public string SelectedFeedAnimal { get; set; }
 
-        public IndexModel(ILogger<IndexModel> logger, AnimalService animalService)
+        public IndexModel(ILogger<IndexModel> logger, IAnimalService animalService)
         {
             _logger = logger;
             _animalService = animalService;
@@ -55,12 +55,6 @@ namespace Zoo.Pages
 
             Type type = Type.GetType($"Zoo.Animals.{animal.Type}");         
             _animalService.AddAnimal((Animal)Activator.CreateInstance(type, name));
-        }
-
-        public class AnimalDto
-        {
-            public string Name { get; set; }
-            public string Type { get; set; }
         }
 
         public void OnPostFeed([FromBody]string a)
