@@ -1,27 +1,27 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Zoo.Animals;
-
 
 namespace Zoo.Services
 {
     public class ChatHub : Hub
     {
         private IAnimalService _animalService;
+
         public ChatHub(IAnimalService animalService)
         {
             _animalService = animalService;
         }
+
         public async Task SendMessage(string user, string message)
         {
             await Clients.All.SendAsync("ReceiveMessage", user, message);
         }
 
-        public async Task AddAnimal(AnimalDto animal)
+        public async Task AddAnimal(AnimalObject animal)
         {
             var name = animal.Name;
             if (name is null)
@@ -43,9 +43,8 @@ namespace Zoo.Services
             {
                 animal.Eat();
             }
+
             await Clients.All.SendAsync("Refresh");
         }
-
-
     }
 }

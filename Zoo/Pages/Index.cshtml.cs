@@ -45,29 +45,6 @@ namespace Zoo.Pages
             StartTimer();
         }
 
-        public void OnPostAdd([FromBody] AnimalDto animal)
-        {
-            var name = animal.Name;
-            if (name is null)
-            {
-                return;
-            }
-
-            Type type = Type.GetType($"Zoo.Animals.{animal.Type}");         
-            _animalService.AddAnimal((Animal)Activator.CreateInstance(type, name));
-        }
-
-        public void OnPostFeed([FromBody]string a)
-        {
-            Type type = Type.GetType($"Zoo.Animals.{a}");
-            IEnumerable animals = _animalService.GetAnimals().Where(x => x.GetType() == type);
-            foreach (Animal animal in animals)
-            {
-                animal.Eat();
-            }
-        }
-
-
         public void StartTimer()
         {
             timer = new Timer(UseEnergy, null, 10, 500);
@@ -81,18 +58,22 @@ namespace Zoo.Pages
             }
         }
 
-        
-        //public  void OnPostFeeding([FromBody] string animal)
-        //{
-
-        //    Type type = Type.GetType($"Zoo.Animals.{animal}");
-        //    IEnumerable animals = _animalService.GetAnimals().Where(x => x.GetType() == type);
-        //    foreach (Animal a in animals)
-        //    {
-        //        a.Eat();
-        //    }
-        //}
-
+        public void Breed(object _)
+        {
+            for (int i = 0; i < Animals.Count - 1; i++)
+            {
+                for (int j = i + 1; j < Animals.Count; j++)
+                {
+                    if (Animals[i].CanBreed(Animals[j]))
+                    {
+                        if (new Random().Next(100) <= 20)
+                        {
+                            _animalService.AddAnimal((Animal)Activator.CreateInstance(Animals[i].GetType(), Animals[j].Name));
+                        }
+                    }
+                }
+            }
+        }
 
         public PartialViewResult OnGetAnimalPartial()
         {
