@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Zoo.Animals
 {
@@ -10,7 +11,6 @@ namespace Zoo.Animals
         {
             Name = name;
             CurrentEnergy = 10;
-            Gender = new Random().Next(2) == 0 ? "Male" : "Female";
         }
 
         public override void Eat()

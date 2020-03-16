@@ -20,7 +20,6 @@ namespace Zoo.Pages
     {
         private readonly ILogger<IndexModel> _logger;
         private readonly IAnimalService _animalService;
-        private Timer timer;
 
         public List<Animal> Animals { get; set; }
 
@@ -38,41 +37,6 @@ namespace Zoo.Pages
             _animalService = animalService;
             Animals = _animalService.GetAnimals();
             ListOfAnimals = new SelectList(_animalService.GetAnimalTypeNames());
-        }
-
-        public void OnGet()
-        {
-            StartTimer();
-        }
-
-        public void StartTimer()
-        {
-            timer = new Timer(UseEnergy, null, 10, 500);
-        }
-
-        public void UseEnergy(object _)
-        {
-            foreach(Animal animal in Animals)
-            {
-                animal.UseEnergy();
-            }
-        }
-
-        public void Breed(object _)
-        {
-            for (int i = 0; i < Animals.Count - 1; i++)
-            {
-                for (int j = i + 1; j < Animals.Count; j++)
-                {
-                    if (Animals[i].CanBreed(Animals[j]))
-                    {
-                        if (new Random().Next(100) <= 20)
-                        {
-                            _animalService.AddAnimal((Animal)Activator.CreateInstance(Animals[i].GetType(), Animals[j].Name));
-                        }
-                    }
-                }
-            }
         }
 
         public PartialViewResult OnGetAnimalPartial()

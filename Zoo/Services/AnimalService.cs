@@ -41,7 +41,5 @@ namespace Zoo.Services
 
             return names;
         }
-
-        
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Zoo.Animals
+﻿namespace Zoo.Animals
 {
     public class Elephant : Animal
     {
@@ -10,7 +8,6 @@ namespace Zoo.Animals
         {
             Name = name;
             CurrentEnergy = 10;
-            Gender = new Random().Next(2) == 0 ? "Male" : "Female";
         }
 
         public override void Eat()
