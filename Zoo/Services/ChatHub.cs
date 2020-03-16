@@ -51,7 +51,5 @@ namespace Zoo.Services
         {
             await Clients.All.Refresh(refresh);
         }
-
-       
     }
 }

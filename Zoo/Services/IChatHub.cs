@@ -8,7 +8,5 @@ namespace Zoo.Services
     public interface IChatHub
     {
         Task Refresh(string refresh = "Refresh");
-
-
     }
 }
