@@ -8,24 +8,22 @@ namespace Zoo.Animals
     public abstract class Animal
     {
         private int energy;
-        private bool pregnant;
+        private readonly Random random;
 
-        private Random random;
         public Animal()
         {
             random = new Random();
             Gender = (Gender)random.Next(2);
             Family = new List<Animal>();
-            Infertile = random.NextBool(10);
         }
 
         public string Name { get; set; }
 
+        public bool HadKid { get; set; }
+
         public List<Animal> Family { get; }
 
         public Gender Gender { get; }
-
-        public bool Infertile { get; }
 
         public abstract int MaxEnergy { get; }
 
@@ -34,12 +32,6 @@ namespace Zoo.Animals
         {
             get => energy;
             set => energy = Math.Clamp(value, 0, MaxEnergy);
-        }
-
-        public bool Pregnant
-        {
-            get => pregnant;
-            set => pregnant = Gender == Gender.Male ? false : value;
         }
 
         public abstract void Eat();
@@ -67,8 +59,8 @@ namespace Zoo.Animals
             Family.AddRange(other.Family);
             other.Family.AddRange(Family);
 
-            Pregnant = true;
-            other.Pregnant = true;
+            HadKid = true;
+            other.HadKid = true;
 
             return animal;
         }

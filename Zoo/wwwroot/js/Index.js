@@ -2,11 +2,19 @@
 
 var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 
+document.getElementById("Add").disabled = true;
+document.getElementById("Feed").disabled = true;
+
 connection.on("Refresh", function () {
     reloadAnimalPartial();
 });
 
-connection.start()
+connection.start().then(function () {
+    document.getElementById("Add").disabled = false;
+    document.getElementById("Feed").disabled = false;
+}).catch(function (err) {
+    return console.error(err.toString());
+});
 
 window.onload = function () {
     reloadAnimalPartial()

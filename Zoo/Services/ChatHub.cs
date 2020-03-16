@@ -11,18 +11,13 @@ using Zoo.Utilities;
 
 namespace Zoo.Services
 {
-    public class ChatHub : Hub
+    public class ChatHub : Hub<IChatHub>
     {
         private IAnimalService _animalService;
 
         public ChatHub(IAnimalService animalService)
         {
             _animalService = animalService;
-        }
-
-        public async Task SendMessage(string user, string message)
-        {
-            await Clients.All.SendAsync("ReceiveMessage", user, message);
         }
 
         public async Task AddAnimal(AnimalObject animal)
@@ -36,12 +31,12 @@ namespace Zoo.Services
             Type type = Type.GetType($"Zoo.Animals.{animal.Type}");
             _animalService.AddAnimal((Animal)Activator.CreateInstance(type, name));
 
-            await Clients.All.SendAsync("Refresh");
+            await Clients.All.Refresh();
         }
 
-        public async Task FeedAnimal(string a)
+        public async Task FeedAnimal(string animalType)
         {
-            Type type = Type.GetType($"Zoo.Animals.{a}");
+            Type type = Type.GetType($"Zoo.Animals.{animalType}");
             IEnumerable animals = _animalService.GetAnimals().Where(x => x.GetType() == type);
             foreach (Animal animal in animals)
             {
@@ -49,17 +44,12 @@ namespace Zoo.Services
             }
             await Breed();
 
-            await Clients.All.SendAsync("Refresh");
+            await Clients.All.Refresh();
         }
 
-        public async Task UseEnergy(object _)
+        public async Task Refresh(string refresh = "Refresh")
         {
-            foreach (Animal animal in _animalService.GetAnimals())
-            {
-                animal.UseEnergy();
-            }
-
-            await Clients.All.SendAsync("Refresh");
+            await Clients.All.Refresh(refresh);
         }
 
         public async Task Breed()
@@ -81,7 +71,7 @@ namespace Zoo.Services
                             _animalService.AddAnimal(child);
                         }
 
-                        animals = animals.Where(x => !x.Pregnant && !x.Infertile);
+                        animals = animals.Where(x => !x.HadKid);
                         if (animals.Count() < 2)
                         {
                             return;
@@ -93,14 +83,14 @@ namespace Zoo.Services
             foreach (string stype in _animalService.GetAnimalTypeNames())
             {
                 Type type = Type.GetType($"Zoo.Animals.{stype}");
-                IEnumerable<Animal> animals = _animalService.GetAnimals().Where(x => x.GetType() == type && !x.Pregnant && !x.Infertile);
+                IEnumerable<Animal> animals = _animalService.GetAnimals().Where(x => x.GetType() == type && !x.HadKid);
                 if (animals.Count() > 2)
                 {
                     CheckBreed(ref animals);
                 }
             }
 
-            await Clients.All.SendAsync("Refresh");
+            await Clients.All.Refresh();
         }
     }
 }
