@@ -1,4 +1,7 @@
-﻿namespace Zoo.Animals
+﻿using System;
+using System.Collections.Generic;
+
+namespace Zoo.Animals
 {
     public class Lion : Animal
     {

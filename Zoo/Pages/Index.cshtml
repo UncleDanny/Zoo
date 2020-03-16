@@ -7,14 +7,13 @@
 <div>
     <form asp-page-handler="add" method="post">
         Add animal: <select asp-for="SelectedAddAnimal" asp-items="@Model.ListOfAnimals"></select>
-        <input type="text" name="name" style="width: 130px" />
-        <button id="Add" type="button" onclick="AddAnimal()" class="btn btn-primary" style="width: 130px">Add</button>
+        <input id="Name" type="text" name="name" style="width: 130px" oninput = "validate()" onkeypress="disableEnter()"/>
+        <button id="Add" type="button" onclick="addAnimal()" class="btn btn-primary" style="width: 130px" disabled>Add</button>
     </form>
     <form asp-page-handler="feed" method="post">
         Feed animal: <select asp-for="SelectedFeedAnimal" asp-items="@Model.ListOfAnimals"></select>
-        <button id="Feed" type="button" onclick="FeedAnimal()" class="btn btn-primary" style="width: 130px" name="type" value="all">Feed</button>
+        <button id="Feed" type="button" onclick="feedAnimal()" class="btn btn-primary" style="width: 130px" name="type" value="all">Feed</button>
     </form>
-    
 </div>
 <div id="reload">
 
