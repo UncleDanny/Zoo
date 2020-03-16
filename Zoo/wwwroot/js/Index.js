@@ -2,14 +2,16 @@
 
 var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 
-document.getElementById("Send").disabled = true;
+document.getElementById("Add").disabled = true;
+document.getElementById("Feed").disabled = true;
 
 connection.on("Refresh", function () {
     foo();  
 });
 
 connection.start().then(function () {
-    document.getElementById("Send").disabled = false;
+    document.getElementById("Add").disabled = false;
+    document.getElementById("Feed").disabled = false;
 }).catch(function (err) {
     return console.error(err.toString());
 });

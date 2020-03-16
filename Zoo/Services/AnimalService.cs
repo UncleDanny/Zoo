@@ -25,6 +25,14 @@ namespace Zoo.Services
             return animals;
         }
 
+        public void UseEnergy()
+        {
+            foreach(Animal animal in animals)
+            {
+                animal.UseEnergy();
+            }          
+        }
+
         public void AddAnimal<T>(T animal) where T : Animal
         {
             animals.Add(animal);
@@ -42,6 +50,9 @@ namespace Zoo.Services
             return names;
         }
 
-        
+        public void FeedAnimals()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

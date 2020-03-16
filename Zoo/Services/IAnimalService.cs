@@ -11,6 +11,10 @@ namespace Zoo.Services
 
         public List<string> GetAnimalTypeNames();
 
+        public void FeedAnimals();
+
+        public void UseEnergy();
+
 
     }
 }

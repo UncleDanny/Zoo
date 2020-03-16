@@ -9,7 +9,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading;
+
 using System.Threading.Tasks;
 using Zoo.Animals;
 using Zoo.Services;
@@ -20,7 +20,7 @@ namespace Zoo.Pages
     {
         private readonly ILogger<IndexModel> _logger;
         private readonly IAnimalService _animalService;
-        private Timer timer;
+     
 
         public List<Animal> Animals { get; set; }
 
@@ -42,7 +42,7 @@ namespace Zoo.Pages
 
         public void OnGet()
         {
-            StartTimer();
+            
         }
 
         public void OnPostAdd([FromBody] AnimalDto animal)
@@ -68,18 +68,7 @@ namespace Zoo.Pages
         }
 
 
-        public void StartTimer()
-        {
-            timer = new Timer(UseEnergy, null, 10, 500);
-        }
-
-        public void UseEnergy(object _)
-        {
-            foreach(Animal animal in Animals)
-            {
-                animal.UseEnergy();
-            }
-        }
+        
 
         
         //public  void OnPostFeeding([FromBody] string animal)
