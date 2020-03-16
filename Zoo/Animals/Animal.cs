@@ -45,7 +45,7 @@ namespace Zoo.Animals
 
         public bool CanBreed(Animal other)
         {
-            return other.Gender != Gender && CurrentEnergy >= (int)(MaxEnergy / 2f) && !FamilyOf(other);
+            return other.Gender != Gender && CurrentEnergy >= (int)(MaxEnergy / 2f) && !FamilyOf(other) && random.NextBool(10);
         }
 
         public Animal Breed(Animal other)
@@ -55,9 +55,11 @@ namespace Zoo.Animals
                 return null;
             }
 
-            Animal animal = (Animal)Activator.CreateInstance(GetType(), other.Name + other.Name);
+            Animal animal = (Animal)Activator.CreateInstance(GetType(), Name + other.Name);
             Family.AddRange(other.Family);
             other.Family.AddRange(Family);
+            animal.Family.AddMultiple(this, other);
+            animal.Family.AddRanges(Family, other.Family);
 
             HadKid = true;
             other.HadKid = true;

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Zoo.Animals;
 
 namespace Zoo.Services
@@ -7,14 +8,14 @@ namespace Zoo.Services
     {
         public List<Animal> GetAnimals();
 
-        public void AddAnimal<T>(T animal) where T : Animal;
-
         public List<string> GetAnimalTypeNames();
 
-        public void FeedAnimals();
+        public void AddAnimal<T>(T animal) where T : Animal;
+
+        public void FeedAnimals(Type type);
+
+        public void BreedAnimals();
 
         public void UseEnergy();
-
-
     }
 }

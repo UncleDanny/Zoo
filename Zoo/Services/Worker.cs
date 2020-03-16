@@ -21,6 +21,7 @@ namespace Zoo.Services
             while (!stoppingToken.IsCancellationRequested)
             {
                 _animalService.UseEnergy();
+                _animalService.BreedAnimals();
                 await _hub.Clients.All.Refresh();
                 await Task.Delay(500, stoppingToken);
             }

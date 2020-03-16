@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Zoo.Animals;
+using Zoo.Utilities;
 
 namespace Zoo.Services
 {
@@ -50,9 +51,50 @@ namespace Zoo.Services
             return names;
         }
 
-        public void FeedAnimals()
+        public void FeedAnimals(Type type)
         {
-            throw new NotImplementedException();
+            IEnumerable<Animal> animalsOfType = animals.Where(x => x.GetType() == type);
+            foreach (Animal animal in animalsOfType)
+            {
+                animal.Eat();
+            }
+        }
+
+        public void BreedAnimals()
+        {
+            void TryBreed(ref IEnumerable<Animal> breedableAnimals)
+            {
+                for (int i = 0; i < breedableAnimals.Count() - 1; i++)
+                {
+                    for (int j = i + 1; j < breedableAnimals.Count(); j++)
+                    {
+                        Animal parentOne = breedableAnimals.ElementAt(i);
+                        Animal parentTwo = breedableAnimals.ElementAt(j);
+
+                        Animal child = parentOne.Breed(parentTwo);
+                        if (!(child is null))
+                        {
+                            AddAnimal(child);
+                        }
+
+                        breedableAnimals = breedableAnimals.Where(x => !x.HadKid);
+                        if (breedableAnimals.Count() < 2)
+                        {
+                            return;
+                        }
+                    }
+                }
+            }
+
+            foreach (string stype in GetAnimalTypeNames())
+            {
+                Type type = Type.GetType($"Zoo.Animals.{stype}");
+                IEnumerable<Animal> breedableAnimals = GetAnimals().Where(x => x.GetType() == type && !x.HadKid);
+                if (breedableAnimals.Count() > 2)
+                {
+                    TryBreed(ref breedableAnimals);
+                }
+            }
         }
     }
 }

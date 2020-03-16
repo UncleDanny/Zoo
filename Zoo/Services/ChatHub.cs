@@ -1,13 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading;
 using System.Threading.Tasks;
 using Zoo.Animals;
-using Zoo.Utilities;
 
 namespace Zoo.Services
 {
@@ -37,60 +31,20 @@ namespace Zoo.Services
         public async Task FeedAnimal(string animalType)
         {
             Type type = Type.GetType($"Zoo.Animals.{animalType}");
-            IEnumerable animals = _animalService.GetAnimals().Where(x => x.GetType() == type);
-            foreach (Animal animal in animals)
-            {
-                animal.Eat();
-            }
-            await Breed();
+            _animalService.FeedAnimals(type);
 
+            await Clients.All.Refresh();
+        }
+
+        public async Task BreedAnimal()
+        {
+            _animalService.BreedAnimals();
             await Clients.All.Refresh();
         }
 
         public async Task Refresh(string refresh = "Refresh")
         {
             await Clients.All.Refresh(refresh);
-        }
-
-        public async Task Breed()
-        {
-            void CheckBreed(ref IEnumerable<Animal> animals)
-            {
-                for (int i = 0; i < animals.Count() - 1; i++)
-                {
-                    for (int j = i + 1; j < animals.Count(); j++)
-                    {
-                        Animal parentOne = animals.ElementAt(i);
-                        Animal parentTwo = animals.ElementAt(j);
-
-                        Animal child = parentOne.Breed(parentTwo);
-                        if (!(child is null))
-                        {
-                            child.Family.AddMultiple(parentOne, parentTwo);
-                            child.Family.AddRanges(parentOne.Family, parentTwo.Family);
-                            _animalService.AddAnimal(child);
-                        }
-
-                        animals = animals.Where(x => !x.HadKid);
-                        if (animals.Count() < 2)
-                        {
-                            return;
-                        }
-                    }
-                }
-            }
-
-            foreach (string stype in _animalService.GetAnimalTypeNames())
-            {
-                Type type = Type.GetType($"Zoo.Animals.{stype}");
-                IEnumerable<Animal> animals = _animalService.GetAnimals().Where(x => x.GetType() == type && !x.HadKid);
-                if (animals.Count() > 2)
-                {
-                    CheckBreed(ref animals);
-                }
-            }
-
-            await Clients.All.Refresh();
         }
     }
 }
