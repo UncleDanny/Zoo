@@ -12,5 +12,7 @@ namespace Zoo.Services
         Task Death(string animal,string death = "Death");
 
         Task AllDied(string animalsDied = "All Animals Died");
+
+        //Task Breed(string animal1, string animal2, string child, string bred = "Bred");
     }
 }

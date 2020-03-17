@@ -18,7 +18,7 @@ namespace Zoo.Services
         public AnimalService()
         {
             animals = new List<Animal>();
-            animals.AddRange(new List<Animal> { new Monkey("ad", Gender.Male), new Elephant("michiel", Gender.Male), new Lion("Maurice", Gender.Male) });
+            animals.AddRange(new List<Animal> { new Monkey("ad", Gender.Male), new Elephant("michiel", Gender.Male), new Lion("Maurice", Gender.Male), new Monkey("Meintje",Gender.Female) });
             animalNames = GetAnimalTypeNames();
         }
 
@@ -57,7 +57,7 @@ namespace Zoo.Services
         public void Reset()
         {
             animals = new List<Animal>();
-            animals.AddRange(new List<Animal> { new Monkey("ad", Gender.Male), new Elephant("michiel", Gender.Male), new Lion("Maurice", Gender.Male) });
+            animals.AddRange(new List<Animal> { new Monkey("ad", Gender.Male), new Elephant("michiel", Gender.Male), new Lion("Maurice", Gender.Male), new Monkey("Meintje", Gender.Female) });
             animalNames = GetAnimalTypeNames();
         }
 
@@ -114,11 +114,7 @@ namespace Zoo.Services
 
         public Tuple<bool,string> UseEnergy()
         {
-            
-            if (!animals.Any())
-            {
-                return new Tuple<bool, string>(true, "");
-            }
+            if (!animals.Any()) return new Tuple<bool, string>(true, "");
 
             foreach (Animal animal in animals)
             {

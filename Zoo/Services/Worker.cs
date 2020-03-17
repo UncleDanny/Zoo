@@ -21,7 +21,6 @@ namespace Zoo.Services
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                
                 if (_animalService.GetAnimals().Any())
                 {
                     var tuple = _animalService.UseEnergy();
