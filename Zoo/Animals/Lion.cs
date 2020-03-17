@@ -7,10 +7,12 @@ namespace Zoo.Animals
     {
         public override int MaxEnergy => 5000;
 
+        public override int EnergyConsumptionRate => 10;
+
         public Lion(string name)
         {
             Name = name;
-            CurrentEnergy = 10;
+            CurrentEnergy = 100;
         }
 
         public override void Eat()
@@ -18,9 +20,6 @@ namespace Zoo.Animals
             CurrentEnergy += 625;
         }
 
-        public override void UseEnergy()
-        {
-            CurrentEnergy -= 10;
-        }
+       
     }
 }

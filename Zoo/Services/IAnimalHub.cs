@@ -5,8 +5,10 @@ using System.Threading.Tasks;
 
 namespace Zoo.Services
 {
-    public interface IChatHub
+    public interface IAnimalHub
     {
         Task Refresh(string refresh = "Refresh");
+
+        Task Death(string death = "Death");
     }
 }

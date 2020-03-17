@@ -21,6 +21,8 @@ namespace Zoo.Animals
 
         public bool HadKid { get; set; }
 
+        public abstract int EnergyConsumptionRate { get;  }
+
         public List<Animal> Family { get; }
 
         public Gender Gender { get; }
@@ -36,7 +38,12 @@ namespace Zoo.Animals
 
         public abstract void Eat();
 
-        public abstract void UseEnergy();
+        public bool UseEnergy()
+        {
+            if (CurrentEnergy == 0) return false;
+            CurrentEnergy -= EnergyConsumptionRate;
+            return true;
+        }
 
         public bool FamilyOf(Animal other)
         {

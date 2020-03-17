@@ -5,11 +5,11 @@ using Zoo.Animals;
 
 namespace Zoo.Services
 {
-    public class ChatHub : Hub<IChatHub>
+    public class AnimalHub : Hub<IAnimalHub>
     {
         private IAnimalService _animalService;
 
-        public ChatHub(IAnimalService animalService)
+        public AnimalHub(IAnimalService animalService)
         {
             _animalService = animalService;
         }
@@ -42,9 +42,20 @@ namespace Zoo.Services
             await Clients.All.Refresh();
         }
 
+        public async Task Reset()
+        {
+            _animalService.Reset();
+            await Clients.All.Refresh();
+        }
+
         public async Task Refresh(string refresh = "Refresh")
         {
             await Clients.All.Refresh(refresh);
+        }
+
+        public async Task Death(string death = "Death")
+        {
+            await Clients.All.Death(death);
         }
     }
 }

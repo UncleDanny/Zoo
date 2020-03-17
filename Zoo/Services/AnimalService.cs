@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace Zoo.Services
         public AnimalService()
         {
             animals = new List<Animal>();
-            animals.AddRange(new List<Animal> { new Monkey("ad"), new Elephant("michiel"), new Lion("Maurice") } );
+            animals.AddRange(new List<Animal> { new Monkey("ad"), new Elephant("michiel"), new Lion("Maurice") });
             animalNames = GetAnimalTypeNames();
         }
 
@@ -26,21 +27,32 @@ namespace Zoo.Services
             return animals;
         }
 
-        public void UseEnergy()
+        public bool UseEnergy()
         {
+            if (!animals.Any()) return true;
             foreach(Animal animal in animals)
             {
-                animal.UseEnergy();
-            }          
+                bool energy = animal.UseEnergy();  
+                if(!energy)
+                {
+                    Debug.WriteLine("Animal " + animal.Name + " has died!");
+                    AnimalDeath(animal);
+                    return true;
+                }
+            }
+            return false;
         }
 
         public void AddAnimal<T>(T animal) where T : Animal
         {
+            if (string.IsNullOrEmpty(animal.Name)) return;
+            if (animals.Where(a => a.Name == animal.Name).Any()) return;
             animals.Add(animal);
         }
 
         public List<string> GetAnimalTypeNames()
         {
+            if (!animals.Any()) return new List<string>();
             IEnumerable<Type> types = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.IsSubclassOf(typeof(Animal)));
             List<string> names = new List<string>();
             foreach (Type type in types)
@@ -49,6 +61,18 @@ namespace Zoo.Services
             }
 
             return names;
+        }
+
+        public void AnimalDeath(Animal animal)
+        {
+            animals.Remove(animal);
+        }
+
+        public void Reset()
+        {
+            animals = new List<Animal>();
+            animals.AddRange(new List<Animal> { new Monkey("ad"), new Elephant("michiel"), new Lion("Maurice") });
+            animalNames = GetAnimalTypeNames();
         }
 
         public void FeedAnimals(Type type)
@@ -62,6 +86,7 @@ namespace Zoo.Services
 
         public void BreedAnimals()
         {
+            if (!animals.Any()) return;
             void TryBreed(ref IEnumerable<Animal> breedableAnimals)
             {
                 for (int i = 0; i < breedableAnimals.Count() - 1; i++)

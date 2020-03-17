@@ -4,17 +4,21 @@
     ViewData["Title"] = "Home page";
 }
 
-<div>
-    <form asp-page-handler="add" method="post">
-        Add animal: <select asp-for="SelectedAddAnimal" asp-items="@Model.ListOfAnimals"></select>
-        <input id="Name" type="text" name="name" style="width: 130px" oninput = "validate()" onkeypress="disableEnter()"/>
-        <button id="Add" type="button" onclick="addAnimal()" class="btn btn-primary" style="width: 130px" disabled>Add</button>
-    </form>
-    <form asp-page-handler="feed" method="post">
-        Feed animal: <select asp-for="SelectedFeedAnimal" asp-items="@Model.ListOfAnimals"></select>
-        <button id="Feed" type="button" onclick="feedAnimal()" class="btn btn-primary" style="width: 130px" name="type" value="all">Feed</button>
-    </form>
-</div>
+    <div>
+        <form asp-page-handler="add" method="post">
+            Add animal: <select asp-for="SelectedAddAnimal" asp-items="@Model.ListOfAnimals"></select>
+            <input id="Name" type="text" name="name" style="width: 130px" oninput="validate()" onkeypress="disableEnter()" />
+            <button id="Add" type="button" onclick="addAnimal()" class="btn btn-primary" style="width: 130px" disabled>Add</button>
+        </form>
+        <form asp-page-handler="feed" method="post">
+            Feed animal: <select asp-for="SelectedFeedAnimal" asp-items="@Model.ListOfAnimals"></select>
+            <button id="Feed" type="button" onclick="feedAnimal()" class="btn btn-primary" style="width: 130px" name="type" value="all">Feed</button>
+        </form>
+
+        <form asp-page-handler="feed" method="post">
+            <button id="Reset" type="button" onclick="Reset()" class="btn btn-primary" style="width: 130px" name="type" value="all">Reset</button>
+        </form>
+    </div>
 <div id="reload">
 
 </div>

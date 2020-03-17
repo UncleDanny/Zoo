@@ -9,6 +9,11 @@ connection.on("Refresh", function () {
     reloadAnimalPartial();
 });
 
+connection.on("Death", function () {
+    alert("Animal "  + " has died of starvation!");
+    reloadAnimalPartial();
+});
+
 connection.start().then(function () {
     document.getElementById("Add").disabled = false;
     document.getElementById("Feed").disabled = false;
@@ -47,6 +52,12 @@ function addAnimal() {
 function feedAnimal() {
     var animal = $('#SelectedFeedAnimal').val();
     connection.invoke("FeedAnimal", animal).catch(function (err) {
+        return console.error(err.toString());
+    });
+}
+
+function Reset() {    
+    connection.invoke("Reset").catch(function (err) {
         return console.error(err.toString());
     });
 }

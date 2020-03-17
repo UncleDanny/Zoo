@@ -4,10 +4,12 @@
     {
         public override int MaxEnergy => 2000;
 
+        public override int EnergyConsumptionRate => 2;
+
         public Monkey(string name)
         {
             Name = name;
-            CurrentEnergy = 20;
+            CurrentEnergy = 200;
         }
 
         public override void Eat()
@@ -15,9 +17,6 @@
             CurrentEnergy += 250;
         }
 
-        public override void UseEnergy()
-        {
-            CurrentEnergy -= 2;
-        }
+     
     }
 }

@@ -54,7 +54,7 @@ namespace Zoo
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
-                endpoints.MapHub<ChatHub>("/chathub");
+                endpoints.MapHub<AnimalHub>("/chathub");
             });
         }
     }

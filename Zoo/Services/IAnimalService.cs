@@ -16,6 +16,8 @@ namespace Zoo.Services
 
         public void BreedAnimals();
 
-        public void UseEnergy();
+        public bool UseEnergy();
+
+        public void Reset();
     }
 }

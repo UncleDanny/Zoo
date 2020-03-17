@@ -4,10 +4,12 @@
     {
         public override int MaxEnergy => 10000;
 
+        public override int EnergyConsumptionRate => 5;
+
         public Elephant(string name)
         {
             Name = name;
-            CurrentEnergy = 10;
+            CurrentEnergy = 100;
         }
 
         public override void Eat()
@@ -15,9 +17,6 @@
             CurrentEnergy += 1250;
         }
 
-        public override void UseEnergy()
-        {
-            CurrentEnergy -= 5;
-        }
+     
     }
 }
