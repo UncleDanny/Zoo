@@ -6,8 +6,9 @@
 
 <div>
     <form asp-page-handler="add" method="post">
-        Add animal: <select asp-for="SelectedAddAnimal" asp-items="@Model.ListOfAnimals"></select>
-        <input id="Name" type="text" name="name" style="width: 130px" oninput = "validate()" onkeypress="disableEnter()"/>
+        Add animal: <select asp-for="SelectedGenderAnimal" asp-items="Html.GetEnumSelectList<Animals.Gender>()"></select>
+        <select asp-for="SelectedAddAnimal" asp-items="@Model.ListOfAnimals"></select>
+        <input id="Name" type="text" name="name" style="width: 130px" oninput="validate()" onkeypress="disableEnter()" />
         <button id="Add" type="button" onclick="addAnimal()" class="btn btn-primary" style="width: 130px" disabled>Add</button>
     </form>
     <form asp-page-handler="feed" method="post">

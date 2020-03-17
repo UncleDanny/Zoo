@@ -7,9 +7,10 @@ namespace Zoo.Animals
     {
         public override int MaxEnergy => 5000;
 
-        public Lion(string name)
+        public Lion(string name, Gender gender)
         {
             Name = name;
+            Gender = gender;
             CurrentEnergy = 10;
         }
 

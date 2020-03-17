@@ -29,6 +29,9 @@ namespace Zoo.Pages
         public string SelectedAddAnimal { get; set; }
 
         [BindProperty(SupportsGet = true)]
+        public Gender SelectedGenderAnimal { get; set; }
+
+        [BindProperty(SupportsGet = true)]
         public string SelectedFeedAnimal { get; set; }
 
         public IndexModel(ILogger<IndexModel> logger, IAnimalService animalService)

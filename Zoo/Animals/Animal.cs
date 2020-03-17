@@ -19,11 +19,11 @@ namespace Zoo.Animals
 
         public string Name { get; set; }
 
+        public Gender Gender { get; set; }
+
         public bool HadKid { get; set; }
 
         public List<Animal> Family { get; }
-
-        public Gender Gender { get; }
 
         public abstract int MaxEnergy { get; }
 
@@ -45,7 +45,7 @@ namespace Zoo.Animals
 
         public bool CanBreed(Animal other)
         {
-            return other.Gender != Gender && CurrentEnergy >= (int)(MaxEnergy / 2f) && !FamilyOf(other) && random.NextBool(10);
+            return random.NextBool(10) && CurrentEnergy >= (int)(MaxEnergy / 2f) && !FamilyOf(other);
         }
 
         public Animal Breed(Animal other)
@@ -73,6 +73,8 @@ namespace Zoo.Animals
         public string Name { get; set; }
 
         public string Type { get; set; }
+
+        public string Gender { get; set; }
     }
 
     public enum Gender

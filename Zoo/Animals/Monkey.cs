@@ -4,9 +4,10 @@
     {
         public override int MaxEnergy => 2000;
 
-        public Monkey(string name)
+        public Monkey(string name, Gender gender)
         {
             Name = name;
+            Gender = gender;
             CurrentEnergy = 20;
         }
 

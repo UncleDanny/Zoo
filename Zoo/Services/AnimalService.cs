@@ -17,26 +17,13 @@ namespace Zoo.Services
         public AnimalService()
         {
             animals = new List<Animal>();
-            animals.AddRange(new List<Animal> { new Monkey("ad"), new Elephant("michiel"), new Lion("Maurice") } );
+            animals.AddRange(new List<Animal> { new Monkey("ad", Gender.Male), new Elephant("michiel", Gender.Male), new Lion("Maurice", Gender.Male) });
             animalNames = GetAnimalTypeNames();
         }
 
         public List<Animal> GetAnimals()
         {
             return animals;
-        }
-
-        public void UseEnergy()
-        {
-            foreach(Animal animal in animals)
-            {
-                animal.UseEnergy();
-            }          
-        }
-
-        public void AddAnimal<T>(T animal) where T : Animal
-        {
-            animals.Add(animal);
         }
 
         public List<string> GetAnimalTypeNames()
@@ -49,6 +36,16 @@ namespace Zoo.Services
             }
 
             return names;
+        }
+
+        public void AddAnimal<T>(T animal) where T : Animal
+        {
+            if (string.IsNullOrEmpty(animal.Name) || animals.Where(a => a.Name == animal.Name).Any())
+            {
+                return;
+            }
+
+            animals.Add(animal);
         }
 
         public void FeedAnimals(Type type)
@@ -94,6 +91,14 @@ namespace Zoo.Services
                 {
                     TryBreed(ref breedableAnimals);
                 }
+            }
+        }
+
+        public void UseEnergy()
+        {
+            foreach (Animal animal in animals)
+            {
+                animal.UseEnergy();
             }
         }
     }
