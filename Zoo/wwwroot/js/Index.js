@@ -9,9 +9,13 @@ connection.on("Refresh", function () {
     reloadAnimalPartial();
 });
 
-connection.on("Death", function () {
-    snackbar("Animal has died!")
+connection.on("Death", function (animal) {
+    snackbar("Animal: " + animal + " has died!")
     reloadAnimalPartial();
+});
+
+connection.on("AllDied", function () {
+    allDied();
 });
 
 connection.start().then(function () {
@@ -68,4 +72,10 @@ function snackbar(msg) {
     x.innerText = msg;
     x.className = "show";
     setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+}
+
+function allDied() {
+    if (confirm("All Animals Died!")) {
+        reset()
+    } 
 }

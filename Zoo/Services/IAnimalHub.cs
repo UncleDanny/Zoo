@@ -9,6 +9,8 @@ namespace Zoo.Services
     {
         Task Refresh(string refresh = "Refresh");
 
-        Task Death(string death = "Death");
+        Task Death(string animal,string death = "Death");
+
+        Task AllDied(string animalsDied = "All Animals Died");
     }
 }

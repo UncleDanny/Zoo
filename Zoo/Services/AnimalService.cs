@@ -112,11 +112,12 @@ namespace Zoo.Services
             }
         }
 
-        public bool UseEnergy()
+        public Tuple<bool,string> UseEnergy()
         {
+            
             if (!animals.Any())
             {
-                return true;
+                return new Tuple<bool, string>(true, "");
             }
 
             foreach (Animal animal in animals)
@@ -126,11 +127,11 @@ namespace Zoo.Services
                 {
                     Debug.WriteLine("Animal " + animal.Name + " has died!");
                     AnimalDeath(animal);
-                    return true;
+                    return new Tuple<bool, string>(true, animal.Name);
                 }
             }
 
-            return false;
+            return new Tuple<bool, string>(false, "");
         }
     }
 }

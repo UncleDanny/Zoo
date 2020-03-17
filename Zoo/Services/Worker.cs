@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Hosting;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -20,8 +21,20 @@ namespace Zoo.Services
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                if (_animalService.UseEnergy()) await _hub.Clients.All.Death();
-                await _hub.Clients.All.Refresh();
+                
+                if (_animalService.GetAnimals().Any())
+                {
+                    var tuple = _animalService.UseEnergy();
+                    if (tuple.Item1) await _hub.Clients.All.Death(tuple.Item2);
+                    await _hub.Clients.All.Refresh();
+                } else
+                {
+                    await _hub.Clients.All.AllDied();
+                    while (!_animalService.GetAnimals().Any())
+                    {
+                        await Task.Delay(500, stoppingToken);
+                    }
+                }
                 await Task.Delay(500, stoppingToken);
             }
         }

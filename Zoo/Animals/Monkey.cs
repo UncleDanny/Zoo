@@ -10,7 +10,7 @@
         {
             Name = name;
             Gender = gender;
-            CurrentEnergy = 200;
+            CurrentEnergy = 50;
         }
 
         public override void Eat()
