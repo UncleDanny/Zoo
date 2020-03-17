@@ -57,7 +57,7 @@ function feedAnimal() {
     });
 }
 
-function Reset() {    
+function reset() {    
     connection.invoke("Reset").catch(function (err) {
         return console.error(err.toString());
     });

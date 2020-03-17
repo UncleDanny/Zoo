@@ -40,7 +40,11 @@ namespace Zoo.Animals
 
         public bool UseEnergy()
         {
-            if (CurrentEnergy == 0) return false;
+            if (CurrentEnergy == 0)
+            {
+                return false;
+            }
+
             CurrentEnergy -= EnergyConsumptionRate;
             return true;
         }

@@ -6,7 +6,7 @@
 
         public override int EnergyConsumptionRate => 5;
 
-        public Elephant(string name)
+        public Elephant(string name, Gender gender)
         {
             Name = name;
             Gender = gender;
