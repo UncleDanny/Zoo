@@ -5,24 +5,27 @@
 }
 
 
-<div>
-    <form asp-page-handler="add" method="post">
-        Add animal: <select asp-for="SelectedGenderAnimal" asp-items="Html.GetEnumSelectList<Animals.Gender>()"></select>
-        <select asp-for="SelectedAddAnimal" asp-items="@Model.ListOfAnimals"></select>
-        <input id="Name" type="text" name="name" style="width: 130px" oninput="validate()" onkeypress="disableEnter()" />
-        <button id="Add" type="button" onclick="addAnimal()" class="btn btn-primary" style="width: 130px" disabled>Add</button>
-    </form>
-    <form asp-page-handler="feed" method="post">
-        Feed animal: <select asp-for="SelectedFeedAnimal" asp-items="@Model.ListOfAnimals"></select>
-        <button id="Feed" type="button" onclick="feedAnimal()" class="btn btn-primary" style="width: 130px" name="type" value="all">Feed</button>
-    </form>
-    <form asp-page-handler="feed" method="post">
-        <button id="Reset" type="button" onclick="reset()" class="btn btn-primary" style="width: 130px" name="type" value="all">Reset</button>
-    </form>
-</div>
+    <div>
+        <form asp-page-handler="add" method="post">
+            Add animal: <select asp-for="SelectedGenderAnimal" asp-items="Html.GetEnumSelectList<Animals.Gender>()"></select>
+            <select asp-for="SelectedAddAnimal" asp-items="@Model.ListOfAnimals"></select>
+            <input id="Name" type="text" name="name" style="width: 130px" oninput="validate()" onkeypress="disableEnter()" />
+            <button id="Add" type="button" onclick="addAnimal()" class="btn btn-primary" style="width: 130px" disabled>Add</button>
+        </form>
+        <form asp-page-handler="feed" method="post">
+            Feed animal: <select asp-for="SelectedFeedAnimal" asp-items="@Model.ListOfAnimals"></select>
+            <button id="Feed" type="button" onclick="feedAnimal()" class="btn btn-primary" style="width: 130px" name="type" value="all">Feed</button>
+        </form>
+        <form asp-page-handler="feed" method="post">
+            <button id="Reset" type="button" onclick="reset()" class="btn btn-primary" style="width: 130px" name="type" value="all">Reset</button>
+        </form>
+        <button onclick="snackbar('jow')">Show Snackbar</button>
+    </div>
 <div id="reload">
 
 </div>
+
+<div id="snackbar">Some text some message..</div>
 
 <script src="~/js/signalr/dist/browser/signalr.js"></script>
 <script src="~/js/Index.js"></script>

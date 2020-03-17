@@ -10,7 +10,7 @@ connection.on("Refresh", function () {
 });
 
 connection.on("Death", function () {
-    alert("Animal "  + " has died of starvation!");
+    snackbar("Animal has died!")
     reloadAnimalPartial();
 });
 
@@ -61,4 +61,11 @@ function reset() {
     connection.invoke("Reset").catch(function (err) {
         return console.error(err.toString());
     });
+}
+
+function snackbar(msg) {
+    var x = document.getElementById("snackbar");
+    x.innerText = msg;
+    x.className = "show";
+    setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
 }

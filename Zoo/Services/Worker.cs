@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Hosting;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -21,9 +20,7 @@ namespace Zoo.Services
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                
-                if(_animalService.UseEnergy()) await _hub.Clients.All.Death("Animal");
-                _animalService.BreedAnimals();
+                if (_animalService.UseEnergy()) await _hub.Clients.All.Death();
                 await _hub.Clients.All.Refresh();
                 await Task.Delay(500, stoppingToken);
             }

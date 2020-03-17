@@ -57,7 +57,7 @@ namespace Zoo.Services
         public void Reset()
         {
             animals = new List<Animal>();
-            animals.AddRange(new List<Animal> { new Monkey("ad"), new Elephant("michiel"), new Lion("Maurice") });
+            animals.AddRange(new List<Animal> { new Monkey("ad", Gender.Male), new Elephant("michiel", Gender.Male), new Lion("Maurice", Gender.Male) });
             animalNames = GetAnimalTypeNames();
         }
 
