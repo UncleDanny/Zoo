@@ -9,14 +9,13 @@
         public Elephant(string name)
         {
             Name = name;
+            Gender = gender;
             CurrentEnergy = 100;
         }
 
         public override void Eat()
         {
             CurrentEnergy += 1250;
-        }
-
-     
+        }   
     }
 }

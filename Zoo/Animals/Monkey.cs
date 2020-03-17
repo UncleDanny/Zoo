@@ -6,9 +6,10 @@
 
         public override int EnergyConsumptionRate => 2;
 
-        public Monkey(string name)
+        public Monkey(string name, Gender gender)
         {
             Name = name;
+            Gender = gender;
             CurrentEnergy = 200;
         }
 
@@ -16,7 +17,5 @@
         {
             CurrentEnergy += 250;
         }
-
-     
     }
 }

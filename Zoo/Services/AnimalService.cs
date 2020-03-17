@@ -18,7 +18,7 @@ namespace Zoo.Services
         public AnimalService()
         {
             animals = new List<Animal>();
-            animals.AddRange(new List<Animal> { new Monkey("ad"), new Elephant("michiel"), new Lion("Maurice") });
+            animals.AddRange(new List<Animal> { new Monkey("ad", Gender.Male), new Elephant("michiel", Gender.Male), new Lion("Maurice", Gender.Male) });
             animalNames = GetAnimalTypeNames();
         }
 
@@ -27,32 +27,8 @@ namespace Zoo.Services
             return animals;
         }
 
-        public bool UseEnergy()
-        {
-            if (!animals.Any()) return true;
-            foreach(Animal animal in animals)
-            {
-                bool energy = animal.UseEnergy();  
-                if(!energy)
-                {
-                    Debug.WriteLine("Animal " + animal.Name + " has died!");
-                    AnimalDeath(animal);
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public void AddAnimal<T>(T animal) where T : Animal
-        {
-            if (string.IsNullOrEmpty(animal.Name)) return;
-            if (animals.Where(a => a.Name == animal.Name).Any()) return;
-            animals.Add(animal);
-        }
-
         public List<string> GetAnimalTypeNames()
         {
-            if (!animals.Any()) return new List<string>();
             IEnumerable<Type> types = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.IsSubclassOf(typeof(Animal)));
             List<string> names = new List<string>();
             foreach (Type type in types)
@@ -61,6 +37,16 @@ namespace Zoo.Services
             }
 
             return names;
+        }
+
+        public void AddAnimal<T>(T animal) where T : Animal
+        {
+            if (string.IsNullOrEmpty(animal.Name) || animals.Where(a => a.Name == animal.Name).Any())
+            {
+                return;
+            }
+
+            animals.Add(animal);
         }
 
         public void AnimalDeath(Animal animal)
@@ -86,7 +72,6 @@ namespace Zoo.Services
 
         public void BreedAnimals()
         {
-            if (!animals.Any()) return;
             void TryBreed(ref IEnumerable<Animal> breedableAnimals)
             {
                 for (int i = 0; i < breedableAnimals.Count() - 1; i++)
@@ -111,6 +96,11 @@ namespace Zoo.Services
                 }
             }
 
+            if (!animals.Any())
+            {
+                return;
+            }
+
             foreach (string stype in GetAnimalTypeNames())
             {
                 Type type = Type.GetType($"Zoo.Animals.{stype}");
@@ -120,6 +110,27 @@ namespace Zoo.Services
                     TryBreed(ref breedableAnimals);
                 }
             }
+        }
+
+        public bool UseEnergy()
+        {
+            if (!animals.Any())
+            {
+                return true;
+            }
+
+            foreach (Animal animal in animals)
+            {
+                bool energy = animal.UseEnergy();
+                if (!energy)
+                {
+                    Debug.WriteLine("Animal " + animal.Name + " has died!");
+                    AnimalDeath(animal);
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

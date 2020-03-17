@@ -23,7 +23,8 @@ namespace Zoo.Services
             }
 
             Type type = Type.GetType($"Zoo.Animals.{animal.Type}");
-            _animalService.AddAnimal((Animal)Activator.CreateInstance(type, name));
+            Gender gender = (Gender)int.Parse(animal.Gender);
+            _animalService.AddAnimal((Animal)Activator.CreateInstance(type, name, gender));
 
             await Clients.All.Refresh();
         }

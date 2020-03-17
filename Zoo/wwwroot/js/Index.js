@@ -43,7 +43,8 @@ function disableEnter() {
 function addAnimal() {
     var type = $('#SelectedAddAnimal').val();
     var name = $('input').val();
-    var animal = { "Name": name, "Type": type };
+    var gender = $('#SelectedGenderAnimal').val();
+    var animal = { "Name": name, "Type": type, "Gender": gender };
     connection.invoke("AddAnimal", animal).catch(function (err) {
         return console.error(err.toString());
     });
