@@ -15,6 +15,7 @@ namespace Zoo.Animals
             random = new Random();
             Gender = (Gender)random.Next(2);
             Family = new List<Animal>();
+            CurrentEnergy = 1000;
         }
 
       
@@ -36,7 +37,7 @@ namespace Zoo.Animals
         {
             get => energy;
             set => energy = Math.Clamp(value, 0, MaxEnergy);
-        }
+        } 
 
         public abstract void Eat();
 
@@ -58,7 +59,7 @@ namespace Zoo.Animals
 
         public bool CanBreed(Animal other)
         {
-            return CurrentEnergy >= (int)(MaxEnergy / 2f) && !FamilyOf(other);
+            return random.NextBool(10) && CurrentEnergy >= (int)(MaxEnergy / 2f) && !FamilyOf(other);
         }
 
         public Animal Breed(Animal other)
@@ -73,6 +74,7 @@ namespace Zoo.Animals
             other.Family.AddRange(Family);
             animal.Family.AddMultiple(this, other);
             animal.Family.AddRanges(Family, other.Family);
+            animal.CurrentEnergy = 1000;
 
             HadKid = true;
             other.HadKid = true;
