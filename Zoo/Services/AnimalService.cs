@@ -18,7 +18,7 @@ namespace Zoo.Services
         public AnimalService()
         {
             animals = new List<Animal>();
-            animals.AddRange(new List<Animal> { new Monkey("ad", Gender.Male), new Elephant("michiel", Gender.Male), new Lion("Maurice", Gender.Male), new Monkey("Meintje",Gender.Female) });
+            animals.AddRange(new List<Animal> { new Monkey("ad", Gender.Male), new Elephant("michiel", Gender.Male), new Lion("Maurice", Gender.Male), new Monkey("Meintje", Gender.Female) });
             animalNames = GetAnimalTypeNames();
         }
 
@@ -70,9 +70,37 @@ namespace Zoo.Services
             }
         }
 
-        public void BreedAnimals()
+        public List<Tuple<string, string, string, string>> BreedAnimals()
         {
-            void TryBreed(ref IEnumerable<Animal> breedableAnimals)
+            var tuples = new List<Tuple<string, string, string, string>>();
+
+            if (!animals.Any())
+            {
+                return null;
+            }
+
+            foreach (string stype in GetAnimalTypeNames())
+            {
+                Type type = Type.GetType($"Zoo.Animals.{stype}");
+                var grouptuples = BreedAnimalGroup(type);
+                if (tuples != null)
+                {
+                    foreach(var tuple in grouptuples)
+                    {
+                        tuples.Add(tuple);
+                    }
+                }
+            }
+
+            return tuples;
+
+        }
+
+        public List<Tuple<string, string, string, string>> BreedAnimalGroup(Type type)
+        {
+            IEnumerable<Animal> breedableAnimals = GetAnimals().Where(x => x.GetType() == type && !x.HadKid);
+            var tuples = new List<Tuple<string,string, string, string>>();
+            if (breedableAnimals.Count() >= 2)
             {
                 for (int i = 0; i < breedableAnimals.Count() - 1; i++)
                 {
@@ -85,34 +113,25 @@ namespace Zoo.Services
                         if (!(child is null))
                         {
                             AddAnimal(child);
+                            var tuple = new Tuple<string, string, string, string>(type.Name, parentOne.Name, parentTwo.Name, child.Name);
+                            tuples.Add(tuple);
                         }
 
                         breedableAnimals = breedableAnimals.Where(x => !x.HadKid);
                         if (breedableAnimals.Count() < 2)
                         {
-                            return;
+                            return null;
                         }
                     }
                 }
             }
 
-            if (!animals.Any())
-            {
-                return;
-            }
-
-            foreach (string stype in GetAnimalTypeNames())
-            {
-                Type type = Type.GetType($"Zoo.Animals.{stype}");
-                IEnumerable<Animal> breedableAnimals = GetAnimals().Where(x => x.GetType() == type && !x.HadKid);
-                if (breedableAnimals.Count() > 2)
-                {
-                    TryBreed(ref breedableAnimals);
-                }
-            }
+            return tuples;
         }
 
-        public Tuple<bool,string> UseEnergy()
+
+
+        public Tuple<bool, string> UseEnergy()
         {
             if (!animals.Any()) return new Tuple<bool, string>(true, "");
 

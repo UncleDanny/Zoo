@@ -14,6 +14,11 @@ connection.on("Death", function (animal) {
     reloadAnimalPartial();
 });
 
+connection.on("Born", function (type, animal1, animal2, child) {
+    snackbar(""+ type + " "+  animal1 + " and " + animal2 + " have recieved a baby " + child);
+    reloadAnimalPartial();
+})
+
 connection.on("AllDied", function () {
     allDied();
 });

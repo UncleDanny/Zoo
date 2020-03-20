@@ -59,6 +59,11 @@ namespace Zoo.Services
             await Clients.All.Death(death, animal);
         }
 
+        public async Task Born(string type,string animal1, string animal2, string child, string bred = "Bred")
+        {
+            await Clients.All.Born(bred,type, animal1, animal2, child);
+        }
+
         public async Task AllDied(string animalsDied = "AllDied")
         {
             await Clients.All.AllDied(animalsDied);

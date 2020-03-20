@@ -13,6 +13,6 @@ namespace Zoo.Services
 
         Task AllDied(string animalsDied = "All Animals Died");
 
-        //Task Breed(string animal1, string animal2, string child, string bred = "Bred");
+        Task Born(string type,string animal1, string animal2, string child, string bred = "Bred");
     }
 }

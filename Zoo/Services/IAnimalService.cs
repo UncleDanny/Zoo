@@ -14,7 +14,7 @@ namespace Zoo.Services
 
         public void FeedAnimals(Type type);
 
-        public void BreedAnimals();
+        public List<Tuple<string,string,string,string>> BreedAnimals();
 
         public Tuple<bool,string> UseEnergy();
 

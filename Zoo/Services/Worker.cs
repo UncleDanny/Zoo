@@ -24,6 +24,14 @@ namespace Zoo.Services
                 if (_animalService.GetAnimals().Any())
                 {
                     var tuple = _animalService.UseEnergy();
+                    var tupleList = _animalService.BreedAnimals();
+                    if(tupleList.Count > 0)
+                    {
+                        foreach(var t in tupleList)
+                        {
+                            await _hub.Clients.All.Born(t.Item1, t.Item2, t.Item3, t.Item4);
+                        }
+                    }
                     if (tuple.Item1) await _hub.Clients.All.Death(tuple.Item2);
                     await _hub.Clients.All.Refresh();
                 } else
