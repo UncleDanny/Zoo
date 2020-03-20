@@ -6,7 +6,11 @@
 
         public override int EnergyConsumptionRate => 2;
 
-        public Monkey(string name, Gender gender)
+        public Monkey(string name) : base()
+        {
+            Name = name;
+        }
+        public Monkey(string name, Gender gender) 
         {
             Name = name;
             Gender = gender;

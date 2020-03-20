@@ -108,8 +108,23 @@ namespace Zoo.Services
                     {
                         Animal parentOne = breedableAnimals.ElementAt(i);
                         Animal parentTwo = breedableAnimals.ElementAt(j);
+                        Animal child = null;
 
-                        Animal child = parentOne.Breed(parentTwo);
+                        if(parentOne.CanBreed(parentTwo))
+                        {
+                            
+                            child = (Animal)Activator.CreateInstance(type, parentOne.Name + parentTwo.Name);
+                            parentOne.Family.AddRange(parentTwo.Family);
+                            parentTwo.Family.AddRange(parentOne.Family);
+                            child.Family.AddMultiple(parentOne, parentTwo);
+                            child.Family.AddRanges(parentOne.Family, parentTwo.Family);
+
+                            parentOne.HadKid = true;
+                            parentTwo.HadKid = true;
+
+                        }
+
+                        
                         if (!(child is null))
                         {
                             AddAnimal(child);
@@ -117,11 +132,12 @@ namespace Zoo.Services
                             tuples.Add(tuple);
                         }
 
-                        breedableAnimals = breedableAnimals.Where(x => !x.HadKid);
-                        if (breedableAnimals.Count() < 2)
-                        {
-                            return null;
-                        }
+                        
+                        //if (breedableAnimals.Count() < 2)
+                        //{
+                        //    return null;
+                        //}
+                        //breedableAnimals = breedableAnimals.Where(x => !x.HadKid);
                     }
                 }
             }

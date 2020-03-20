@@ -17,6 +17,8 @@ namespace Zoo.Animals
             Family = new List<Animal>();
         }
 
+      
+
         public string Name { get; set; }
 
         public Gender Gender { get; set; }
@@ -56,7 +58,7 @@ namespace Zoo.Animals
 
         public bool CanBreed(Animal other)
         {
-            return random.NextBool(10) && CurrentEnergy >= (int)(MaxEnergy / 2f) && !FamilyOf(other);
+            return CurrentEnergy >= (int)(MaxEnergy / 2f) && !FamilyOf(other);
         }
 
         public Animal Breed(Animal other)

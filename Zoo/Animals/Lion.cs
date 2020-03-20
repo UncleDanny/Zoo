@@ -9,6 +9,10 @@ namespace Zoo.Animals
 
         public override int EnergyConsumptionRate => 10;
 
+        public Lion(string name) : base()
+        {
+            Name = name;
+        }
         public Lion(string name, Gender gender)
         {
             Name = name;
