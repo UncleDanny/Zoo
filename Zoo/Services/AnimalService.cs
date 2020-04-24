@@ -66,7 +66,7 @@ namespace Zoo.Services
             IEnumerable<Animal> animalsOfType = animals.Where(x => x.GetType() == type);
             foreach (Animal animal in animalsOfType)
             {
-                animal.Eat();
+                if(animal.CurrentEnergy != animal.MaxEnergy) animal.Eat();
             }
         }
 
